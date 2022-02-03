@@ -1,0 +1,27 @@
+import pandas as pd
+import psycopg2
+def query(q):
+    '''pass SQL query to a remote database'''
+    username = 'usr'
+    password = 'pass'
+
+    remotehost = 'xx.xx.us-east-1.rds.amazonaws.com'
+    conn = psycopg2.connect(host = remotehost,
+                            port = 1234,
+                            user = username,
+                            password = password)
+    df = pd.read_sql(q, conn)
+    return(df)
+
+def IfDuplicated(listOfElements):
+    '''Check if a given list contains any duplicated elements'''
+    if len(listOfElements) == len(set(listOfElements)):
+        return 'No'
+    else:
+        return 'Yes'
+
+
+
+def normalizer(df):
+    df = df.div(df.sum(axis=1), axis=0)
+    return df
